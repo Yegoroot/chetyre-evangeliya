@@ -113,6 +113,45 @@
   .maplegend i{width:16px;height:16px;border-radius:4px;flex:0 0 16px;font-style:normal;border:1px solid rgba(0,0,0,.15)}
   [dir="rtl"] .maplegend{font-size:1.05rem}
   [hidden]{display:none !important}
+  /* прокрутка широких таблиц */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
+  .tscroll table{margin:0}
+  /* мобильная вёрстка: убираем лишние отступы по краям */
+  @media(max-width:640px){
+    .wrap{padding:0 8px}
+    header{padding:22px 8px 20px}
+    header h1{font-size:1.45rem}
+    header .sub{font-size:.95rem}
+    /* навигация — одна прокручиваемая строка */
+    nav .wrap{padding:6px 4px;gap:2px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    nav .wrap::-webkit-scrollbar{display:none}
+    nav a{padding:8px 9px;flex:0 0 auto}
+    /* переключатель языка — плавающая кнопка снизу по центру, не перекрывает контент */
+    .lang-switch{top:auto;bottom:calc(12px + env(safe-area-inset-bottom));right:50%;transform:translateX(50%);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+    .lang-switch button{padding:9px 18px;font-size:.85rem}
+    /* таблицы: горизонтальный скролл вместо сжатия */
+    .tscroll table{min-width:540px}
+    body{padding-bottom:64px}
+    main{padding:16px 0 6px}
+    section{margin:0 0 16px;padding:16px 12px;border-radius:8px}
+    h2{font-size:1.25rem}
+    h3{font-size:1.05rem}
+    table{font-size:.82rem}
+    th,td{padding:6px 6px}
+    blockquote{padding:10px 12px;margin:12px 0}
+    .facts{grid-template-columns:1fr;gap:8px}
+    .cards{grid-template-columns:1fr}
+    details.acc summary{padding:10px 12px}
+    details.acc .acc-body{padding:10px 12px}
+    .flow span{padding:6px 9px}
+    .steps li{padding-inline-start:38px}
+    .total-bar{padding:10px 12px;font-size:.95rem}
+    [dir="rtl"]{font-size:1.08rem;line-height:2.05}
+    [dir="rtl"] h1{font-size:1.6rem}
+    [dir="rtl"] h2{font-size:1.35rem}
+    [dir="rtl"] table{font-size:.92rem}
+    [dir="rtl"] .books{columns:1}
+  }
 </style>
 </head>
 <body>
@@ -883,6 +922,14 @@
   var saved = 'ar';
   try { saved = localStorage.getItem('gospels-lang') || 'ar'; } catch(e){}
   setLang(saved);
+  // обернуть все таблицы в прокручиваемый контейнер (для мобильных)
+  document.querySelectorAll('main table').forEach(function(t){
+    if (t.parentElement.classList.contains('tscroll')) return;
+    var w = document.createElement('div');
+    w.className = 'tscroll';
+    t.parentNode.insertBefore(w, t);
+    w.appendChild(t);
+  });
 })();
 </script>
 </body>

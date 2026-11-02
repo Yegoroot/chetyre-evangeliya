@@ -55,6 +55,29 @@
   footer{text-align:center;color:var(--muted);font-size:.8rem;font-family:Verdana,Arial,sans-serif;padding:20px}
   .video-box{position:relative;padding-bottom:56.25%;height:0;margin:14px 0;border-radius:8px;overflow:hidden;border:1px solid var(--border)}
   .video-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  /* прокрутка широких таблиц */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:14px 0}
+  .tscroll table{margin:0}
+  /* мобильная вёрстка: убираем лишние отступы по краям */
+  @media(max-width:640px){
+    .wrap{padding:0 8px}
+    header{padding:22px 8px 20px}
+    header h1{font-size:1.45rem}
+    header .sub{font-size:.95rem}
+    nav .wrap{padding:6px 4px;gap:2px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    nav .wrap::-webkit-scrollbar{display:none}
+    nav a{padding:8px 9px;flex:0 0 auto}
+    .tscroll table{min-width:540px}
+    main{padding:16px 0 6px}
+    section{margin:0 0 16px;padding:16px 12px;border-radius:8px}
+    h2{font-size:1.25rem}
+    h3{font-size:1.05rem}
+    table{font-size:.82rem}
+    th,td{padding:6px 6px}
+    blockquote{padding:10px 12px;margin:12px 0}
+    .cards{grid-template-columns:1fr}
+    .timeline li{padding-left:14px}
+  }
 </style>
 </head>
 <body>
@@ -319,5 +342,13 @@
 
 </main>
 <footer>Исследование источников христианских течений · страница 1: состав Библии и история канона · ноябрь 2026</footer>
+<script>
+document.querySelectorAll('main table').forEach(function(t){
+  var w = document.createElement('div');
+  w.className = 'tscroll';
+  t.parentNode.insertBefore(w, t);
+  w.appendChild(t);
+});
+</script>
 </body>
 </html>
